@@ -3,19 +3,15 @@ sudo: required
 services:
   - docker
 
-env:
-- NAME=tiagonobre/docker-firefox-headless
-- VERSION=latest
-
 install: true
 
 before_install:
   - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 
 script:
-  - docker build -t $(NAME):$(VERSION) .
+  - docker build -t $NAME:$VERSION .
 
 after_success:
-  - if [ "$TRAVIS_BRANCH" == "push_docker_images_with_ci" ]; then
-    docker tag $(NAME):$(VERSION) && docker push $(NAME):$(VERSION);
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker tag $NAME:$VERSION $NAME:$VERSION && docker push $NAME:$VERSION;
     fi
