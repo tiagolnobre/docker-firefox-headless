@@ -1,8 +1,6 @@
 FROM ruby:2.2
 
-# Install apt based dependencies required to run Rails as
-# well as RubyGems. As the Ruby image itself is based on a
-# Debian image, we use apt-get to install those.
+# Install dependencies
 RUN apt-get update && apt-get install -y \
   build-essential \
   fontconfig \
@@ -31,14 +29,10 @@ ENV LANGUAGE en_US.UTF-8
 ENV DISPLAY=":99.0" \
     FF_VERSION="42.0"
 
-
 RUN wget "https://download-installer.cdn.mozilla.net/pub/firefox/releases/${FF_VERSION}/linux-x86_64/en-US/firefox-${FF_VERSION}.tar.bz2" \
     -O /tmp/firefox.tar.bz2 && \
     tar xvf /tmp/firefox.tar.bz2 -C /opt && \
     ln -s /opt/firefox/firefox /usr/bin/firefox
-
-
-ENV DISPLAY :99
 
 # Install Xvfb init script
 ADD xvfb_init /etc/init.d/xvfb
